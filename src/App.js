@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useSound from 'use-sound';
 import bassSFX from './sounds/bass.mp3';
 import drumSFX from './sounds/360749__therobotizer__vr-909.mp3';
@@ -7,7 +7,6 @@ import './App.css';
 //const [play] = useSound(bassSFX, {soundEnabled});
 
 function App() {
-  const [disp,setdisp] = useState(true);
   const [soundEnabled, setsoundEnabled] = useState(true);
   const [volume, setvolume] = useState(0.5);
   const [interrupt, setinterrupt] = useState(true);
@@ -28,81 +27,43 @@ function App() {
     interrupt
   });
 
+  var _volume = useCallback(event => {
+    document.getElementById('display').innerHTML = "Volume:" + " " + Math.floor(document.getElementById('trackr').value * 100)
+  },[]);
+
+  var _listener = useCallback(event => {
+    document.getElementById("display").innerHTML = event.target.value;
+  },[]);
+
   useEffect(()=>{
     setvolume(document.getElementById('trackr').value);
   })
 
+if(soundEnabled === true){
+   document.querySelectorAll("#b").forEach(item => {
+     item.addEventListener("mousedown",_listener, true);
+   });
+ }
 
-function call(event){
+ if(soundEnabled === false){
+   document.querySelectorAll("#b").forEach(item => {
+     item.removeEventListener("mousedown",_listener, true);
+   });
+ }
 
-  document.getElementById('display').innerHTML = this.value;
-//  if(soundEnabled === false){
-  //  document.querySelectorAll("#b").forEach(function(item){
-  //    item.removeEventListener("mouseover", call, true);
-  //  });
-//  }
+ useEffect(()=>{
+   if(soundEnabled === true){
+   document.getElementById('trackr').addEventListener("input",_volume, false);
 }
-  //if(soundEnabled === true){
-  //var el = document.querySelectorAll("#b");
-
-
-var el = document.querySelectorAll("#b");
-
-
-if(disp === true){
-   for(var i = 0; i < el.length; i++){
-    el[i].addEventListener("mousedown", call);
+  if(soundEnabled === false){
+    document.getElementById('trackr').removeEventListener("input",_volume, false);
   }
-}
-
-
-
-
-
-//  useEffect(()=>{
-
-  //  if(soundEnabled === false){
-    //  var el = document.querySelectorAll("#b");
-    //  el.forEach(function(el) {
-    //   el.removeEventListener("mousedown", call);
-    //});
-    //}
-  //},[soundEnabled]);
-
-//useEffect(()=>{
-
-//},[soundEnabled]);
-
-  //Array.prototype.forEach.call(el, function(el) {
-//    el.addEventListener("mousedown", call, true);
-//});
-//}
-
-//  if(soundEnabled === false){
-//    Array.prototype.forEach.call(el, function(el) {
-  //    el.removeEventListener("mousedown", call);
-//  });
-  //  document.getElementById('display').innerHTML = "";
- //}
-  //ellist.map(x => x.removeEventListener("mousedown",function(){document.getElementById('display').innerHTML = x.value}))
-  //ellist[i].removeEventListener("mousedown",function(){document.getElementById('display').innerHTML = ellist[i].value}, true);
-    //document.getElementById('display').innerHTML = display;
+});
 
 function power(){
   setsoundEnabled(prevsoundEnabled => !prevsoundEnabled);
-  setdisp(prevdisp => !prevdisp);
-  for(var i = 0; i < el.length; i++){
-    el[i].removeEventListener("mousedown", call);
-  }
-  //if(soundEnabled === false){
-//el.forEach(function(el) {
-  //el.removeEventListener("mousedown", call, true);
-//});
-//}
-
   document.getElementById('display').innerHTML = "";
 }
-
 
   return (
     <div>

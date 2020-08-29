@@ -52,8 +52,14 @@ button{
   background-color: #244D56;
   height: 60px;
   width: 200px;
-  position:relative;
+  position: relative;
   right: 60px;
+  display: table-cell;
+  text-align: center;
+  color: #EDEDBF;
+  vertical-align: middle;
+  font-weight: 500;
+  font-size: 25px;
 }
 
 button:active {
