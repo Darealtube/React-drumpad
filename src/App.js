@@ -2,14 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useSound from 'use-sound';
 import bassSFX from './sounds/bass.mp3';
 import drumSFX from './sounds/360749__therobotizer__vr-909.mp3';
+import trapSFX from './sounds/909set.mp3'
 import './App.css';
 
-//const [play] = useSound(bassSFX, {soundEnabled});
 
 function App() {
   const [soundEnabled, setsoundEnabled] = useState(true);
   const [volume, setvolume] = useState(0.5);
   const [interrupt, setinterrupt] = useState(true);
+  const [bank,setbank] = useState(true);
   const [play] = useSound(drumSFX, {
     sprite: {
       bass: [0, 250],
@@ -26,19 +27,69 @@ function App() {
     soundEnabled,
     interrupt
   });
+  const [play2] = useSound(trapSFX, {
+    sprite: {
+      weird: [0, 800],
+      matic: [1200, 1500],
+      ramen: [3600, 1000],
+      hihats5: [6400, 500],
+      tome: [5700, 500],
+      clap: [7000, 500],
+      ohh: [7800, 800],
+      ride4: [9100, 1000],
+      snare5: [12200, 300],
+    },
+    volume,
+    soundEnabled
+  });
 
+ //CUSTOM HOOK (CHANGE)
+  const useKeyboardBindings = map => {
+    useEffect(() => {
+      const handlePress = ev => {
+        const handler = map[ev.key];
+
+        if (typeof handler === 'function') {
+          handler();
+        }
+      };
+
+      window.addEventListener('keyup', handlePress);
+
+      return () => {
+        window.removeEventListener('keyup', handlePress);
+      };
+    }, [map]);
+  };
+
+  //EVENT LISTENERS FOR VOLUME CHANGE AND ON MOUSEDOWN
   var _volume = useCallback(event => {
-    document.getElementById('display').innerHTML = "Volume:" + " " + Math.floor(document.getElementById('trackr').value * 100)
+    document.getElementById('display').innerHTML = "Volume:" + " " + document.getElementById('trackr').value
   },[]);
 
   var _listener = useCallback(event => {
     document.getElementById("display").innerHTML = event.target.value;
   },[]);
 
+//(CHANGE)
+var el = document.querySelectorAll('#b');
+  useKeyboardBindings({
+   "t": function(){
+     bank ? play({ id: "crash" }) : play2({id: "weird"});
+     document.getElementById('display').innerHTML = el[0].value;
+   },
+   "y": () => play({ id: 'snare' }),
+   "k": () => play({ id: 'tom1' }),
+   "g": () => play({ id: 'tom2' }),
+ });
+//(CHANGE)
+
+ //CHANGES VOLUME WHEN RANGE SLIDER VALUE IS CHANGED
   useEffect(()=>{
     setvolume(document.getElementById('trackr').value);
   })
 
+ //ADDS EVENT LISTENERS TO BUTTONS
 if(soundEnabled === true){
    document.querySelectorAll("#b").forEach(item => {
      item.addEventListener("mousedown",_listener, true);
@@ -51,6 +102,7 @@ if(soundEnabled === true){
    });
  }
 
+//ADDS EVENT LISTENER TO RANGE SLIDER
  useEffect(()=>{
    if(soundEnabled === true){
    document.getElementById('trackr').addEventListener("input",_volume, false);
@@ -60,9 +112,27 @@ if(soundEnabled === true){
   }
 });
 
+//HANDLES DISPLAYING BANK CHANGE
+useEffect(()=>{
+  if(soundEnabled){
+  if(bank === true){
+    document.getElementById('display').innerHTML = "909 Set"
+  }
+  if(bank === false){
+    document.getElementById('display').innerHTML = "808 Set"
+  }
+}
+},[bank]);
+
+//ON OFF SWITCH
 function power(){
   setsoundEnabled(prevsoundEnabled => !prevsoundEnabled);
   document.getElementById('display').innerHTML = "";
+}
+
+//BANK SWITCH
+function banks(){
+  setbank(prevbank => !prevbank);
 }
 
   return (
@@ -70,17 +140,17 @@ function power(){
       <div className="pad">
 
          <div className="main">
-           <button onMouseDown={()=> play({ id: "crash" })} value="Crash" id="b" className="button1">T</button>
-           <button onMouseDown={()=> play({ id: "ride" })} value="Ride" id="b" className="button2">Y</button>
-           <button onMouseDown={()=> play({ id: "close" })} value="Close Hi Hat" id="b" className="button3">K</button>
+           <button onMouseDown={()=> bank ? play({ id: "crash" }) : play2({id: "weird"})} value={bank? "Crash" : "Weird 808"} id="b" className="button1">T</button>
+           <button onMouseDown={()=> bank ? play({ id: "ride" }) : play2({id: "matic"})} value={bank? "Ride" : "Matic 808"} id="b" className="button2">Y</button>
+           <button onMouseDown={()=> bank ? play({ id: "close" }) : play2({id: "ramen"})} value={bank? "Close Hi Hat" : "Ramen 808"} id="b" className="button3">K</button>
            <br/>
-           <button onMouseDown={()=> play({ id: "tom3" })} value="Tom 3" id="b" className="button4">G</button>
-           <button onMouseDown={()=> play({ id: "tom2" })} value="Tom 2" id="b" className="button5">H</button>
-           <button onMouseDown={()=> play({ id: "tom1" })} value="Tom 1" id="b" className="button6">J</button>
+           <button onMouseDown={()=> bank ? play({ id: "tom3" }) : play2({id: "tome"})} value={bank? "Tom 3" : "Tom 808"} id="b" className="button4">G</button>
+           <button onMouseDown={()=> bank ? play({ id: "tom2" }) : play2({id: "hihats5"})} value={bank? "Tom 2" : "Close HH 808"} id="b" className="button5">H</button>
+           <button onMouseDown={()=> bank ? play({ id: "tom1" }) : play2({id: "clap"})} value={bank? "Tom 1" : "Clap 808"} id="b" className="button6">J</button>
            <br/>
-           <button onMouseDown={()=> play({ id: "bass" })} value="Bass" id="b" className="button7">B</button>
-           <button onMouseDown={()=> play({ id: "snare" })} value="Snare" id="b" className="button8">N</button>
-           <button onMouseDown={()=> play({ id: "open" })} value="Open Hi Hat" id="b" className="button9">M</button>
+           <button onMouseDown={()=> bank ? play({ id: "bass" }) : play2({id: "ohh"})} value={bank ? "Bass" : "Open HH 808"} id="b" className="button7">B</button>
+           <button onMouseDown={()=> bank ? play({ id: "snare" }) : play2({id: "ride4"})} value={bank ? "Snare" : "Ride 808"} id="b" className="button8">N</button>
+           <button onMouseDown={()=> bank ? play({ id: "open" }) : play2({id: "snare5"})} value={bank ? "Open Hi Hat" : "Snare 808"} id="b" className="button9">M</button>
 
            <div className="controls">
            <h2>Power</h2>
@@ -101,7 +171,7 @@ function power(){
           <div className="bank">
           <h2>Bank</h2>
           <label class="toggle">
-          <input type="checkbox"/>
+          <input onClick={banks} type="checkbox"/>
           <div>
         <span></span>
         </div>
