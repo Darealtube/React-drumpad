@@ -4,12 +4,13 @@ import bassSFX from './sounds/bass.mp3';
 import drumSFX from './sounds/360749__therobotizer__vr-909.mp3';
 import trapSFX from './sounds/909set.mp3'
 import './App.css';
+import useKeyboardBindings from './useKeyboardBindings.js';
 
 
 function App() {
+  var el = document.querySelectorAll('#b');
   const [soundEnabled, setsoundEnabled] = useState(true);
   const [volume, setvolume] = useState(0.5);
-  const [interrupt, setinterrupt] = useState(true);
   const [bank,setbank] = useState(true);
   const [play] = useSound(drumSFX, {
     sprite: {
@@ -24,8 +25,7 @@ function App() {
       close: [7300, 300],
     },
     volume,
-    soundEnabled,
-    interrupt
+    soundEnabled
   });
   const [play2] = useSound(trapSFX, {
     sprite: {
@@ -43,51 +43,109 @@ function App() {
     soundEnabled
   });
 
- //CUSTOM HOOK (CHANGE)
-  const useKeyboardBindings = map => {
-    useEffect(() => {
-      const handlePress = ev => {
-        const handler = map[ev.key];
-
-        if (typeof handler === 'function') {
-          handler();
-        }
-      };
-
-      window.addEventListener('keyup', handlePress);
-
-      return () => {
-        window.removeEventListener('keyup', handlePress);
-      };
-    }, [map]);
-  };
-
   //EVENT LISTENERS FOR VOLUME CHANGE AND ON MOUSEDOWN
   var _volume = useCallback(event => {
-    document.getElementById('display').innerHTML = "Volume:" + " " + document.getElementById('trackr').value
+    document.getElementById('display').innerHTML = "Volume:" + " " + Math.floor(document.getElementById('trackr').value * 100)
   },[]);
 
   var _listener = useCallback(event => {
     document.getElementById("display").innerHTML = event.target.value;
   },[]);
 
-//(CHANGE)
-var el = document.querySelectorAll('#b');
+//KEYBOARD BINDING
   useKeyboardBindings({
    "t": function(){
-     bank ? play({ id: "crash" }) : play2({id: "weird"});
+     if(soundEnabled){
+     bank ? play({ id: "crash" }) : play2({id: "ride4"})
      document.getElementById('display').innerHTML = el[0].value;
+     el[0].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[0].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[0].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[0].style.transform = "none";},60)
+   }
    },
-   "y": () => play({ id: 'snare' }),
-   "k": () => play({ id: 'tom1' }),
-   "g": () => play({ id: 'tom2' }),
+   "y": function(){
+     if(soundEnabled){
+     bank ? play({ id: "ride" }) : play2({id: "matic"})
+     document.getElementById('display').innerHTML = el[1].value;
+     el[1].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[1].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[1].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[1].style.transform = "none";},60)
+   }
+   },
+   "k": function(){
+     if(soundEnabled){
+     bank ? play({ id: "close" }) : play2({id: "ohh"})
+     document.getElementById('display').innerHTML = el[2].value;
+     el[2].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[2].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[2].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[2].style.transform = "none";},60)
+   }
+   },
+   "g": function(){
+     if(soundEnabled){
+     bank ? play({ id: "tom3" }) : play2({id: "tome"})
+     document.getElementById('display').innerHTML = el[3].value;
+     el[3].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[3].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[3].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[3].style.transform = "none";},60)
+   }
+   },
+   "h": function(){
+     if(soundEnabled){
+     bank ? play({ id: "tom2" }) : play2({id: "ramen"})
+     document.getElementById('display').innerHTML = el[4].value;
+     el[4].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[4].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[4].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[4].style.transform = "none";},60)
+   }
+   },
+   "j": function(){
+     if(soundEnabled){
+     bank ? play({ id: "tom1" }) : play2({id: "clap"})
+     document.getElementById('display').innerHTML = el[5].value;
+     el[5].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[5].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[5].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[5].style.transform = "none";},60)
+   }
+   },
+   "b": function(){
+     if(soundEnabled){
+     bank ? play({ id: "bass" }) : play2({id: "weird"})
+     document.getElementById('display').innerHTML = el[6].value;
+     el[6].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[6].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[6].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[6].style.transform = "none";},60)
+   }
+   },
+   "n": function(){
+     if(soundEnabled){
+     bank ? play({ id: "snare" }) : play2({id: "snare5"})
+     document.getElementById('display').innerHTML = el[7].value;
+     el[7].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[7].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[7].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[7].style.transform = "none";},60)
+   }
+   },
+   "m": function(){
+     if(soundEnabled){
+     bank ? play({ id: "open" }) : play2({id: "hihats5"})
+     document.getElementById('display').innerHTML = el[8].value;
+     el[8].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
+     el[8].style.transform = "translateY(10px)";
+     setTimeout(()=>{el[8].style.backgroundImage = "linear-gradient(85deg, #838386, #C6C6C6)"; el[8].style.transform = "none";},60)
+   }
+   },
  });
-//(CHANGE)
+
 
  //CHANGES VOLUME WHEN RANGE SLIDER VALUE IS CHANGED
-  useEffect(()=>{
-    setvolume(document.getElementById('trackr').value);
-  })
+
+
+
+
+
+
+//  console.log(document.getElementById('trackr').value)
 
  //ADDS EVENT LISTENERS TO BUTTONS
 if(soundEnabled === true){
@@ -102,7 +160,7 @@ if(soundEnabled === true){
    });
  }
 
-//ADDS EVENT LISTENER TO RANGE SLIDER
+//ADDS EVENT LISTENER TO RANGE SLIDER (DISPLAY);
  useEffect(()=>{
    if(soundEnabled === true){
    document.getElementById('trackr').addEventListener("input",_volume, false);
@@ -135,22 +193,23 @@ function banks(){
   setbank(prevbank => !prevbank);
 }
 
+
   return (
     <div>
       <div className="pad">
 
          <div className="main">
-           <button onMouseDown={()=> bank ? play({ id: "crash" }) : play2({id: "weird"})} value={bank? "Crash" : "Weird 808"} id="b" className="button1">T</button>
+           <button onMouseDown={()=> bank ? play({ id: "crash" }) : play2({id: "ride4"})} value={bank? "Crash" : "Weird 808"} id="b" className="button1">T</button>
            <button onMouseDown={()=> bank ? play({ id: "ride" }) : play2({id: "matic"})} value={bank? "Ride" : "Matic 808"} id="b" className="button2">Y</button>
-           <button onMouseDown={()=> bank ? play({ id: "close" }) : play2({id: "ramen"})} value={bank? "Close Hi Hat" : "Ramen 808"} id="b" className="button3">K</button>
+           <button onMouseDown={()=> bank ? play({ id: "close" }) : play2({id: "ohh"})} value={bank? "Close Hi Hat" : "Ramen 808"} id="b" className="button3">K</button>
            <br/>
            <button onMouseDown={()=> bank ? play({ id: "tom3" }) : play2({id: "tome"})} value={bank? "Tom 3" : "Tom 808"} id="b" className="button4">G</button>
-           <button onMouseDown={()=> bank ? play({ id: "tom2" }) : play2({id: "hihats5"})} value={bank? "Tom 2" : "Close HH 808"} id="b" className="button5">H</button>
+           <button onMouseDown={()=> bank ? play({ id: "tom2" }) : play2({id: "ramen"})} value={bank? "Tom 2" : "Close HH 808"} id="b" className="button5">H</button>
            <button onMouseDown={()=> bank ? play({ id: "tom1" }) : play2({id: "clap"})} value={bank? "Tom 1" : "Clap 808"} id="b" className="button6">J</button>
            <br/>
-           <button onMouseDown={()=> bank ? play({ id: "bass" }) : play2({id: "ohh"})} value={bank ? "Bass" : "Open HH 808"} id="b" className="button7">B</button>
-           <button onMouseDown={()=> bank ? play({ id: "snare" }) : play2({id: "ride4"})} value={bank ? "Snare" : "Ride 808"} id="b" className="button8">N</button>
-           <button onMouseDown={()=> bank ? play({ id: "open" }) : play2({id: "snare5"})} value={bank ? "Open Hi Hat" : "Snare 808"} id="b" className="button9">M</button>
+           <button onMouseDown={()=> bank ? play({ id: "bass" }) : play2({id: "weird"})} value={bank ? "Bass" : "Open HH 808"} id="b" className="button7">B</button>
+           <button onMouseDown={()=> bank ? play({ id: "snare" }) : play2({id: "snare5"})} value={bank ? "Snare" : "Ride 808"} id="b" className="button8">N</button>
+           <button onMouseDown={()=> bank ? play({ id: "open" }) : play2({id: "hihats5"})} value={bank ? "Open Hi Hat" : "Snare 808"} id="b" className="button9">M</button>
 
            <div className="controls">
            <h2>Power</h2>
