@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import useSound from 'use-sound';
-import bassSFX from './sounds/bass.mp3';
-import drumSFX from './sounds/360749__therobotizer__vr-909.mp3';
-import trapSFX from './sounds/909set.mp3'
+import sfxS from './sounds/sfxS.mp3'
 import './App.css';
 import useKeyboardBindings from './useKeyboardBindings.js';
 
@@ -10,9 +8,8 @@ import useKeyboardBindings from './useKeyboardBindings.js';
 function App() {
   var el = document.querySelectorAll('#b');
   const [soundEnabled, setsoundEnabled] = useState(true);
-  const [volume, setvolume] = useState(0.5);
   const [bank,setbank] = useState(true);
-  const [play] = useSound(drumSFX, {
+  const [play, {sound}] = useSound(sfxS, {
     sprite: {
       bass: [0, 250],
       snare: [500, 250],
@@ -23,29 +20,22 @@ function App() {
       crash: [5400, 1000],
       open: [6500, 500],
       close: [7300, 300],
+      weird: [8400, 800],
+      matic: [9600, 1500],
+      ramen: [12000, 1000],
+      hihats5: [14800, 500],
+      tome: [14100, 500],
+      clap: [15400, 500],
+      ohh: [16200, 800],
+      ride4: [17500, 1000],
+      snare5: [20600, 300],
     },
-    volume,
-    soundEnabled
-  });
-  const [play2] = useSound(trapSFX, {
-    sprite: {
-      weird: [0, 800],
-      matic: [1200, 1500],
-      ramen: [3600, 1000],
-      hihats5: [6400, 500],
-      tome: [5700, 500],
-      clap: [7000, 500],
-      ohh: [7800, 800],
-      ride4: [9100, 1000],
-      snare5: [12200, 300],
-    },
-    volume,
     soundEnabled
   });
 
   //EVENT LISTENERS FOR VOLUME CHANGE AND ON MOUSEDOWN
   var _volume = useCallback(event => {
-    document.getElementById('display').innerHTML = "Volume:" + " " + Math.floor(document.getElementById('trackr').value * 100)
+    document.getElementById('display').innerHTML = "Volume:" + " " + Math.floor(event.target.value * 100)
   },[]);
 
   var _listener = useCallback(event => {
@@ -56,7 +46,7 @@ function App() {
   useKeyboardBindings({
    "t": function(){
      if(soundEnabled){
-     bank ? play({ id: "crash" }) : play2({id: "ride4"})
+     bank ? play({ id: "crash" }) : play({id: "ride4"})
      document.getElementById('display').innerHTML = el[0].value;
      el[0].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[0].style.transform = "translateY(10px)";
@@ -65,7 +55,7 @@ function App() {
    },
    "y": function(){
      if(soundEnabled){
-     bank ? play({ id: "ride" }) : play2({id: "matic"})
+     bank ? play({ id: "ride" }) : play({id: "matic"})
      document.getElementById('display').innerHTML = el[1].value;
      el[1].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[1].style.transform = "translateY(10px)";
@@ -74,7 +64,7 @@ function App() {
    },
    "k": function(){
      if(soundEnabled){
-     bank ? play({ id: "close" }) : play2({id: "ohh"})
+     bank ? play({ id: "close" }) : play({id: "ohh"})
      document.getElementById('display').innerHTML = el[2].value;
      el[2].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[2].style.transform = "translateY(10px)";
@@ -83,7 +73,7 @@ function App() {
    },
    "g": function(){
      if(soundEnabled){
-     bank ? play({ id: "tom3" }) : play2({id: "tome"})
+     bank ? play({ id: "tom3" }) : play({id: "tome"})
      document.getElementById('display').innerHTML = el[3].value;
      el[3].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[3].style.transform = "translateY(10px)";
@@ -92,7 +82,7 @@ function App() {
    },
    "h": function(){
      if(soundEnabled){
-     bank ? play({ id: "tom2" }) : play2({id: "ramen"})
+     bank ? play({ id: "tom2" }) : play({id: "ramen"})
      document.getElementById('display').innerHTML = el[4].value;
      el[4].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[4].style.transform = "translateY(10px)";
@@ -101,7 +91,7 @@ function App() {
    },
    "j": function(){
      if(soundEnabled){
-     bank ? play({ id: "tom1" }) : play2({id: "clap"})
+     bank ? play({ id: "tom1" }) : play({id: "clap"})
      document.getElementById('display').innerHTML = el[5].value;
      el[5].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[5].style.transform = "translateY(10px)";
@@ -110,7 +100,7 @@ function App() {
    },
    "b": function(){
      if(soundEnabled){
-     bank ? play({ id: "bass" }) : play2({id: "weird"})
+     bank ? play({ id: "bass" }) : play({id: "weird"})
      document.getElementById('display').innerHTML = el[6].value;
      el[6].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[6].style.transform = "translateY(10px)";
@@ -119,7 +109,7 @@ function App() {
    },
    "n": function(){
      if(soundEnabled){
-     bank ? play({ id: "snare" }) : play2({id: "snare5"})
+     bank ? play({ id: "snare" }) : play({id: "snare5"})
      document.getElementById('display').innerHTML = el[7].value;
      el[7].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[7].style.transform = "translateY(10px)";
@@ -128,7 +118,7 @@ function App() {
    },
    "m": function(){
      if(soundEnabled){
-     bank ? play({ id: "open" }) : play2({id: "hihats5"})
+     bank ? play({ id: "open" }) : play({id: "hihats5"})
      document.getElementById('display').innerHTML = el[8].value;
      el[8].style.backgroundImage = "linear-gradient(65deg, #9D3907, #F2BB05)";
      el[8].style.transform = "translateY(10px)";
@@ -137,15 +127,10 @@ function App() {
    },
  });
 
-
  //CHANGES VOLUME WHEN RANGE SLIDER VALUE IS CHANGED
-
-
-
-
-
-
-//  console.log(document.getElementById('trackr').value)
+ function handleInput(e) {
+   sound.volume(e.target.value);
+ }
 
  //ADDS EVENT LISTENERS TO BUTTONS
 if(soundEnabled === true){
@@ -199,17 +184,17 @@ function banks(){
       <div className="pad">
 
          <div className="main">
-           <button onMouseDown={()=> bank ? play({ id: "crash" }) : play2({id: "ride4"})} value={bank? "Crash" : "Weird 808"} id="b" className="button1">T</button>
-           <button onMouseDown={()=> bank ? play({ id: "ride" }) : play2({id: "matic"})} value={bank? "Ride" : "Matic 808"} id="b" className="button2">Y</button>
-           <button onMouseDown={()=> bank ? play({ id: "close" }) : play2({id: "ohh"})} value={bank? "Close Hi Hat" : "Ramen 808"} id="b" className="button3">K</button>
+           <button onMouseDown={()=> bank ? play({ id: "crash" }) : play({id: "ride4"})} value={bank? "Crash" : "Weird 808"} id="b" className="button1">T</button>
+           <button onMouseDown={()=> bank ? play({ id: "ride" }) : play({id: "matic"})} value={bank? "Ride" : "Matic 808"} id="b" className="button2">Y</button>
+           <button onMouseDown={()=> bank ? play({ id: "close" }) : play({id: "ohh"})} value={bank? "Close Hi Hat" : "Ramen 808"} id="b" className="button3">K</button>
            <br/>
-           <button onMouseDown={()=> bank ? play({ id: "tom3" }) : play2({id: "tome"})} value={bank? "Tom 3" : "Tom 808"} id="b" className="button4">G</button>
-           <button onMouseDown={()=> bank ? play({ id: "tom2" }) : play2({id: "ramen"})} value={bank? "Tom 2" : "Close HH 808"} id="b" className="button5">H</button>
-           <button onMouseDown={()=> bank ? play({ id: "tom1" }) : play2({id: "clap"})} value={bank? "Tom 1" : "Clap 808"} id="b" className="button6">J</button>
+           <button onMouseDown={()=> bank ? play({ id: "tom3" }) : play({id: "tome"})} value={bank? "Tom 3" : "Tom 808"} id="b" className="button4">G</button>
+           <button onMouseDown={()=> bank ? play({ id: "tom2" }) : play({id: "ramen"})} value={bank? "Tom 2" : "Close HH 808"} id="b" className="button5">H</button>
+           <button onMouseDown={()=> bank ? play({ id: "tom1" }) : play({id: "clap"})} value={bank? "Tom 1" : "Clap 808"} id="b" className="button6">J</button>
            <br/>
-           <button onMouseDown={()=> bank ? play({ id: "bass" }) : play2({id: "weird"})} value={bank ? "Bass" : "Open HH 808"} id="b" className="button7">B</button>
-           <button onMouseDown={()=> bank ? play({ id: "snare" }) : play2({id: "snare5"})} value={bank ? "Snare" : "Ride 808"} id="b" className="button8">N</button>
-           <button onMouseDown={()=> bank ? play({ id: "open" }) : play2({id: "hihats5"})} value={bank ? "Open Hi Hat" : "Snare 808"} id="b" className="button9">M</button>
+           <button onMouseDown={()=> bank ? play({ id: "bass" }) : play({id: "weird"})} value={bank ? "Bass" : "Open HH 808"} id="b" className="button7">B</button>
+           <button onMouseDown={()=> bank ? play({ id: "snare" }) : play({id: "snare5"})} value={bank ? "Snare" : "Ride 808"} id="b" className="button8">N</button>
+           <button onMouseDown={()=> bank ? play({ id: "open" }) : play({id: "hihats5"})} value={bank ? "Open Hi Hat" : "Snare 808"} id="b" className="button9">M</button>
 
            <div className="controls">
            <h2>Power</h2>
@@ -224,7 +209,7 @@ function banks(){
           <div id="display" className="display">
           </div>
           <br/>
-          <input id="trackr" type="range" step="0.01" defaultValue="0.5" min="0" max="1"/>
+          <input onInput={handleInput} id="trackr" type="range" step="0.01" defaultValue="0.5" min="0" max="1"/>
           </div>
 
           <div className="bank">
