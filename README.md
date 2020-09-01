@@ -1,7 +1,25 @@
 # React Hook Drum Pad
 
-React Hook Drum Pad is still currently on going...
+React Hook Drum Pad is Finished!!
 
-Since 4 days ago.
+![](/src/image/dr.png)
 
-I will update this README when it is done.
+Simple Drum Pad with Two Sets
+
+- 808 Set
+- 909 Set
+
+Volume Slider, Power Switch, and Nine buttons.
+
+# React Hooks Used
+
+**UseState**
+**UseCallback**
+**UseEffect**
+
+**~~(It sure took me 3 days to solve one problem in the code...)**
+
+To run it on your local machine clone into the repo, then type: 
+
+    npm install && npm start
+    
