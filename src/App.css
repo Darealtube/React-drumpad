@@ -63,12 +63,9 @@ button{
 }
 
 button:active {
- transform: translateY(10px);
- background: linear-gradient(65deg, #9D3907, #F2BB05);
+ transform: translateY(10px) !important;
+ background: linear-gradient(65deg, #9D3907, #F2BB05) !important;
 }
-
-
-
 
 
 /* Range Slider */
