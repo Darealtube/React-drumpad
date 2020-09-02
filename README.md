@@ -16,6 +16,14 @@ Volume Slider, Power Switch, and Nine buttons.
 **UseState**
 **UseCallback**
 **UseEffect**
+**UseKeyboardBindings** (Custom Hook)
+
+# use-sound Hook
+
+I used a custom hook called useSound.
+You can know more about it here: https://github.com/joshwcomeau/use-sound
+
+Credits to Josh W. Comeau
 
 **~~(It sure took me 3 days to solve one problem in the code...)**
 
