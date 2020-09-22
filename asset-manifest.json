@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/React-drumpad/static/css/main.bcee60dd.chunk.css",
+    "main.js": "/React-drumpad/static/js/main.2b6c2cbb.chunk.js",
+    "main.js.map": "/React-drumpad/static/js/main.2b6c2cbb.chunk.js.map",
+    "runtime-main.js": "/React-drumpad/static/js/runtime-main.b7b533fb.js",
+    "runtime-main.js.map": "/React-drumpad/static/js/runtime-main.b7b533fb.js.map",
+    "static/js/2.e129f49e.chunk.js": "/React-drumpad/static/js/2.e129f49e.chunk.js",
+    "static/js/2.e129f49e.chunk.js.map": "/React-drumpad/static/js/2.e129f49e.chunk.js.map",
+    "static/js/3.fe2eadc6.chunk.js": "/React-drumpad/static/js/3.fe2eadc6.chunk.js",
+    "static/js/3.fe2eadc6.chunk.js.map": "/React-drumpad/static/js/3.fe2eadc6.chunk.js.map",
+    "index.html": "/React-drumpad/index.html",
+    "precache-manifest.d8d606fe6955580235eb63ca5bab10ec.js": "/React-drumpad/precache-manifest.d8d606fe6955580235eb63ca5bab10ec.js",
+    "service-worker.js": "/React-drumpad/service-worker.js",
+    "static/css/main.bcee60dd.chunk.css.map": "/React-drumpad/static/css/main.bcee60dd.chunk.css.map",
+    "static/js/2.e129f49e.chunk.js.LICENSE.txt": "/React-drumpad/static/js/2.e129f49e.chunk.js.LICENSE.txt",
+    "static/js/3.fe2eadc6.chunk.js.LICENSE.txt": "/React-drumpad/static/js/3.fe2eadc6.chunk.js.LICENSE.txt",
+    "static/media/sfxS.mp3": "/React-drumpad/static/media/sfxS.e1c4563c.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b7b533fb.js",
+    "static/js/2.e129f49e.chunk.js",
+    "static/css/main.bcee60dd.chunk.css",
+    "static/js/main.2b6c2cbb.chunk.js"
+  ]
+}
