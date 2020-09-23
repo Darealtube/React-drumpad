@@ -27,6 +27,10 @@ Credits to Josh W. Comeau
 
 **~~(It sure took me 3 days to solve one problem in the code...)**
 
+
+Website is here: https://darealtube.github.io/React-drumpad/
+
+
 To run it on your local machine clone into the repo, then type: 
 
     npm install && npm start
